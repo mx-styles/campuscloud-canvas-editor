@@ -1,0 +1,589 @@
+.mce-editor {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+.mce-workspace {
+	flex: 1;
+	overflow: hidden;
+	background: #252525;
+}
+.mce-sidebar {
+	width: 16%;
+	min-width: 200px;
+	height: 100%;
+	background: #474747;
+	color: #d4d4d4;
+}
+.mce-sidebar-body {
+	height: 100%;
+}
+.mce-sidebar-switch {
+	display: none;
+}
+.mce-mobile .mce-sidebar {
+	position: absolute;
+	z-index: 100;
+	top: 0;
+	right: 0;
+	width: auto;
+	min-width: auto;
+}
+.mce-mobile .mce-sidebar-body {
+	display: none;
+	width: 0;
+}
+.mce-mobile .mce-visible .mce-sidebar-body {
+	display: block;
+	max-width: 200px;
+	width: 100%;
+}
+.mce-mobile .mce-sidebar-switch {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 100%;
+	width: 40px;
+	height: 40px;
+	background: #474747;
+	cursor: pointer;
+}
+.mce-mobile .mce-sidebar-switch-icon {
+	width: 20px;
+	height: 20px;
+	margin: 10px;
+}
+.mce-mobile .mce-sidebar-switch-icon path {
+	fill: #fff;
+}
+
+/* .mce-toolbar */
+.mce-toolbar {
+	position: absolute;
+	z-index: 99;
+	top: 0;
+	left: 40px;
+	background: #474747;
+	color: #d4d4d4;
+	padding: 6px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+.top-menu {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	order: 0;
+}
+.top-menu-item{
+	position: relative;
+	color: #fff;
+	display: inline-block;
+	padding: 6px 10px;
+	cursor: default;
+	border-radius: 4px;
+	transition: background 0.15s;
+}
+.top-menu-item .top-menu-dropdown{
+	display: none;
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 0;
+	background: #474747;
+	border: 1px solid #2b2b2b;
+	padding: 6px 0;
+	min-width: 160px;
+	box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+.top-menu-item.open .top-menu-dropdown{ display: block; }
+.top-menu-action{
+	display: block;
+	width: 100%;
+	padding: 8px 12px;
+	background: transparent;
+	color: #fff;
+	border: 0;
+	text-align: left;
+	cursor: pointer;
+}
+.top-menu-action:hover{ background: #5d5d5d; }
+.top-menu-separator{
+	height: 1px;
+	background: rgba(255,255,255,0.15);
+	margin: 6px 0;
+}
+
+/* Canvas container */
+#canvas {
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Status Bar */
+.status-bar {
+	position: relative;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 24px;
+	background: #474747;
+	border-top: 1px solid #252525;
+	color: #d4d4d4;
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 11px;
+	line-height: 1.2;
+	padding: 0 8px;
+	box-sizing: border-box;
+	flex-shrink: 0;
+}
+
+.status-section {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.status-section.status-right {
+	margin-left: auto;
+}
+
+.status-item {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	padding: 2px 4px;
+	border-radius: 2px;
+	transition: background-color 0.2s ease;
+	white-space: nowrap;
+	min-height: 16px;
+}
+
+.status-item:hover {
+	background-color: rgba(255, 255, 255, 0.08);
+}
+
+.status-icon {
+	font-size: 10px;
+	opacity: 0.7;
+	width: 8px;
+	text-align: center;
+}
+
+.status-text {
+	font-weight: 400;
+	color: #d4d4d4;
+	font-size: 14px;
+}
+
+/* Status item variants */
+.status-item.status-success .status-text {
+	color: #4ade80;
+}
+
+.status-item.status-warning .status-text {
+	color: #fbbf24;
+}
+
+.status-item.status-error .status-text {
+	color: #f87171;
+}
+
+.status-item.status-info .status-text {
+	color: #60a5fa;
+}
+
+/* Status message area */
+.status-message {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.85);
+	color: #d4d4d4;
+	padding: 3px 10px;
+	border-radius: 2px;
+	font-size: 11px;
+	font-weight: 500;
+	z-index: 1000;
+	transition: opacity 0.3s ease;
+	pointer-events: none;
+	white-space: nowrap;
+}
+
+.status-message.status-message-success {
+	background: rgba(74, 222, 128, 0.2);
+	color: #4ade80;
+	border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.status-message.status-message-warning {
+	background: rgba(251, 191, 36, 0.2);
+	color: #fbbf24;
+	border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.status-message.status-message-error {
+	background: rgba(248, 113, 113, 0.2);
+	color: #f87171;
+	border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.status-message.status-message-info {
+	background: rgba(96, 165, 250, 0.2);
+	color: #60a5fa;
+	border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.status-message.status-message-info {
+	background: rgba(59, 130, 246, 0.9);
+}
+
+.top-menu-item:hover {
+	background: #5d5d5d;
+}
+
+.app-icon{ width: 28px; height: 28px; margin: 8px 12px; }
+.top-menu-sep{ width:1px; height:28px; background: rgba(255,255,255,0.08); margin:0 8px; }
+.top-menu-action.small{
+	display:inline-block;
+	width:auto;
+	padding:6px 8px;
+	text-align:center;
+	border-radius: 4px;
+	transition: background 0.15s;
+}
+
+/* make canvas take full window below header */
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; }
+#canvas { flex: 1 1 auto; height: calc(100vh - 52px); }
+.mce-toolbar.mce-hidden {
+	display: none;
+}
+.mce-toolbar-item {
+	display: inline-block;
+}
+.mce-toolbar-label {
+	padding: 0 5px;
+	vertical-align: middle;
+}
+.mce-toolbar-number-input {
+	width: 60px;
+	background: #2b2b2b;
+	color: #fff;
+	box-sizing: border-box;
+	border: 0;
+	outline: 0;
+	padding: 5px;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+.mce-toolbar-color-input {
+	width: 60px;
+	border: 0;
+	outline: 0;
+	padding: 0;
+	height: 26px;
+	border-radius: 4px;
+	-webkit-appearance: none;
+	vertical-align: middle;
+}
+.mce-toolbar-color-input::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+.mce-toolbar-color-input::-webkit-color-swatch {
+	border: none;
+}
+
+/* .mce-toolbox */
+.mce-toolbox {
+	display: flex;
+	flex-direction: column;
+	width: 40px;
+	background: #474747;
+}
+.mce-toolbox-top {
+	flex: 1;
+}
+
+.mce-toolbox-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin: 4px;
+	cursor: pointer;
+	border-radius: 4px;
+	user-select: none;
+}
+.mce-toolbox-item:hover,
+.mce-toolbox-item.mce-selected {
+	background: #5d5d5d;
+}
+.mce-toolbox-item-icon {
+	width: 20px;
+	height: 20px;
+	margin: 6px;
+}
+.mce-toolbox-item-icon path {
+	fill: #fff;
+}
+.mce-toolbox-item-zoom {
+	color: #fff;
+	font-size: 11px;
+}
+
+/* .mce-icon-button */
+.mce-icon-button {
+	cursor: pointer;
+}
+.mce-icon-button:hover {
+	opacity: 0.8;
+}
+.mce-icon-button.mce-icon-button-sm {
+	width: 16px;
+	height: 16px;
+}
+.mce-icon-button.mce-icon-button-sm svg {
+	width: 14px;
+	height: 14px;
+	margin: 1px;
+}
+.mce-icon-button.mce-icon-button-sm svg path {
+	fill: #fff;
+}
+
+/* .mce-panel */
+.mce-panel {
+	display: flex;
+	flex-direction: column;
+	height: 50%;
+}
+.mce-panel-tabs {
+	background: #252525;
+	padding: 4px 0 0;
+}
+.mce-panel-tab {
+	display: inline-block;
+	background: #474747;
+	padding: 3px 6px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+.mce-panel-body {
+	flex: 1;
+	overflow: auto;
+}
+.mce-panel-empty {
+	text-align: center;
+	padding: 5px 0;
+}
+
+.mce-layers-panel-item {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	align-items: center;
+	border-bottom: 1px solid #252525;
+}
+.mce-layers-panel-item.mce-selected {
+	background: #5d5d5d;
+}
+.mce-layers-panel-item .mce-icon-button {
+	margin: 0 4px;
+}
+.mce-layers-panel-item-label {
+	flex: 1;
+	margin: 6px 4px;
+}
+.mce-layers-panel-item-label-input {
+	width: 100%;
+	border: 0;
+	outline: 0;
+	margin: 0;
+	padding: 3px 0;
+	background: transparent;
+	color: #d4d4d4;
+}
+.mce-layers-panel-item-label-input:read-only {
+	cursor: default;
+	pointer-events: none;
+}
+
+.mce-properties-editor {
+	padding: 4px;
+}
+
+/* .mce-prop-row */
+.mce-prop-row {
+	display: flex;
+	width: 100%;
+	gap: 4px;
+}
+.mce-prop-col {
+	flex: 1;
+}
+
+/* .mce-prop-simple */
+.mce-prop-simple {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	box-sizing: border-box;
+}
+.mce-prop-simple-label {
+	padding: 2px 8px 2px 2px;
+}
+.mce-prop-simple-body {
+	flex: 1;
+	padding: 2px 4px 2px 0;
+}
+
+/* .mce-prop-number-input */
+.mce-prop-number-input {
+	width: 100%;
+	background: #2b2b2b;
+	color: #fff;
+	box-sizing: border-box;
+	border: 0;
+	outline: 0;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+/* .mce-prop-color-input */
+.mce-prop-color-input {
+	width: 100%;
+	border: 0;
+	outline: 0;
+	padding: 0;
+	height: 26px;
+	border-radius: 4px;
+	-webkit-appearance: none;
+}
+.mce-prop-color-input::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+.mce-prop-color-input::-webkit-color-swatch {
+	border: none;
+}
+
+/* .mce-prop-number-input-color */
+.mce-prop-choice {
+	width: 100%;
+	background: #2b2b2b;
+	color: #fff;
+	box-sizing: border-box;
+	border: 0;
+	outline: 0;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+/* Ensure canvas elements are always visible after import */
+canvas {
+	visibility: visible !important;
+	display: block !important;
+}
+
+#canvas canvas {
+	visibility: visible !important;
+	display: block !important;
+}
+
+/* Status Bar */
+.status-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 24px;
+	border-top: 1px solid #3d3d3d;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #cccccc;
+	z-index: 999;
+}
+
+.status-section {
+	display: flex;
+	align-items: center;
+	padding: 0 8px;
+	border-right: 1px solid #3d3d3d;
+	height: 100%;
+}
+
+.status-section:last-child {
+	border-right: none;
+}
+
+.status-section.status-right {
+	margin-left: auto;
+	border-right: none;
+	border-left: 1px solid #3d3d3d;
+}
+
+.status-item {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	cursor: default;
+	transition: color 0.2s ease;
+}
+
+.status-item:hover {
+	color: #ffffff;
+}
+
+.status-icon {
+	width: 14px;
+	height: 14px;
+	opacity: 0.8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.status-icon svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+}
+
+.status-icon.text-icon {
+	font-size: 11px;
+	width: auto;
+	height: auto;
+}
+
+.status-text {
+	font-weight: 400;
+	white-space: nowrap;
+}
+
+/* Status colors for different states */
+.status-item.status-active {
+	color: #4ade80;
+}
+
+.status-item.status-warning {
+	color: #fbbf24;
+}
+
+.status-item.status-error {
+	color: #f87171;
+}
+
+.status-item.status-success {
+	color: #10b981;
+}
+
+/* Adjust main content to account for status bar */
+body {
+	padding-bottom: 24px;
+}
